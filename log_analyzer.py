@@ -1,19 +1,23 @@
-from collections import Counter
+def analyze_logs():
+    error_count = 0
+    warning_count = 0
+    info_count = 0
 
-with open('log.txt') as f:
-    lines = f.readlines()
+    with open("log.txt", "r") as f:
+        for line in f:
+            if "ERROR" in line:
+                error_count += 1
+            elif "WARNING" in line:
+                warning_count += 1
+            elif "INFO" in line:
+                info_count += 1
 
-stats = Counter()
-for line in lines:
-    if 'ERROR' in line:
-        stats['ERROR'] += 1
-    elif 'WARNING' in line:
-        stats['WARNING'] += 1
-    elif 'INFO' in line:
-        stats['INFO'] += 1
+    with open("rapport.txt", "w") as f:
+        f.write(f"ERROR: {error_count}\n")
+        f.write(f"WARNING: {warning_count}\n")
+        f.write(f"INFO: {info_count}\n")
 
-with open('rapport.txt', 'w') as report:
-    for k, v in stats.items():
-        report.write(f"{k}: {v}\n")
+    print("Analyse terminée, voir rapport.txt")
 
-print("Analyse terminée.")
+if __name__ == "__main__":
+    analyze_logs()
